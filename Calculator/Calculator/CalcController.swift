@@ -70,7 +70,8 @@ extension CalcController: UICollectionViewDataSource {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CalcHeadeCell.identifier, for: indexPath) as? CalcHeadeCell  else {
             fatalError("Failed to dequeue ButtonCell in CalcController")
         }
-         return header
+        header.configure(currentCalcText: self.viewModel.calcHeaderLabel)
+        return header
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -113,8 +114,6 @@ extension CalcController: UICollectionViewDelegate {
 
 extension CalcController: UICollectionViewDelegateFlowLayout {
     
-    
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         let calcButton = self.viewModel.calcButtonCells[indexPath.row]
@@ -143,7 +142,7 @@ extension CalcController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let buttonCell = self.viewModel.calcButtonCells[indexPath.row]
-        print(buttonCell.title)
+        self.viewModel.didSelectButton(with: buttonCell)
 
     }
 }

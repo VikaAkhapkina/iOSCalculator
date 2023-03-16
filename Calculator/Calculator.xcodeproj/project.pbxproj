@@ -18,6 +18,7 @@
 		E6CE2C79299AA4B50017373E /* CalcHeadeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE2C78299AA4B50017373E /* CalcHeadeCell.swift */; };
 		E6CE2C7B299AA5340017373E /* CalculatorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE2C7A299AA5340017373E /* CalculatorButton.swift */; };
 		E6CE2C8729C223E70017373E /* CalculatorOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE2C8629C223E70017373E /* CalculatorOperation.swift */; };
+		E6CE2C8929C22C650017373E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE2C8829C22C650017373E /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		E6CE2C78299AA4B50017373E /* CalcHeadeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcHeadeCell.swift; sourceTree = "<group>"; };
 		E6CE2C7A299AA5340017373E /* CalculatorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorButton.swift; sourceTree = "<group>"; };
 		E6CE2C8629C223E70017373E /* CalculatorOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorOperation.swift; sourceTree = "<group>"; };
+		E6CE2C8829C22C650017373E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				E6CE2C5D299A9F630017373E /* AppDelegate.swift */,
 				E6CE2C66299A9F640017373E /* Assets.xcassets */,
 				E6CE2C68299A9F640017373E /* LaunchScreen.storyboard */,
+				E6CE2C8829C22C650017373E /* Extensions.swift */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6CE2C62299A9F630017373E /* CalcController.swift in Sources */,
+				E6CE2C8929C22C650017373E /* Extensions.swift in Sources */,
 				E6CE2C7B299AA5340017373E /* CalculatorButton.swift in Sources */,
 				E6CE2C5E299A9F630017373E /* AppDelegate.swift in Sources */,
 				E6CE2C60299A9F630017373E /* SceneDelegate.swift in Sources */,

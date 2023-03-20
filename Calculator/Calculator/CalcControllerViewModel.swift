@@ -29,19 +29,23 @@ class CalcControllerViewModel {
     private(set) lazy var calcHeaderLabel: String = (self.firstNumber ?? 0).description 
     private(set) var currentNumber: CurrentNumber = .firstNumber
     
-    private(set) var firstNumber: Int? = nil
-    private(set) var secondNumber: Int? = nil
+    private(set) var firstNumber: Int? = nil { didSet { self.calcHeaderLabel = self.firstNumber?.description ?? "0" }}
+    private(set) var secondNumber: Int? = nil { didSet { self.calcHeaderLabel = self.secondNumber?.description ?? "0" }}
+    
+    private(set) var operation: CalculatorOperation? = nil
     
     //MARK: - Memory Variables
     private(set) var prevNumber: Int? = nil
+    private(set) var prevOperation: CalculatorOperation? = nil
 }
 
 extension CalcControllerViewModel {
     
     public func didSelectButton(with calcButton: CalculatorButton){
+        
         switch calcButton {
         case .allClear:
-            fatalError()
+            self.didSelectAllClear()
         case .plusMines:
             fatalError()
         case .percentage:
@@ -63,6 +67,15 @@ extension CalcControllerViewModel {
         }
         
         self.updateView?()
+    }
+    
+    private func didSelectAllClear() {
+        self.currentNumber = .firstNumber
+        self.firstNumber = nil
+        self.secondNumber = nil
+        self.operation = nil
+        self.prevNumber = nil
+        self.prevOperation = nil
     }
 }
 

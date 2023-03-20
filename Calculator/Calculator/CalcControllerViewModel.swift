@@ -14,8 +14,9 @@ enum CurrentNumber {
 
 class CalcControllerViewModel {
     
-    //MARK: - TableView DataSourse Array
+    var updateView: (() -> Void)? 
     
+    //MARK: - TableView DataSourse Array
     let calcButtonCells: [CalculatorButton] = [
         .allClear, .plusMines, .percentage, .divide,
         .number(7), .number(8), .number(9), .multiply,
@@ -24,12 +25,15 @@ class CalcControllerViewModel {
         .number(0), .decimal, .equals
         
     ]
-    //MARK: - Variables
-    private(set) lazy var calcHeaderLabel: String = "42"
+    //MARK: - Normal Variables
+    private(set) lazy var calcHeaderLabel: String = (self.firstNumber ?? 0).description 
     private(set) var currentNumber: CurrentNumber = .firstNumber
     
     private(set) var firstNumber: Int? = nil
     private(set) var secondNumber: Int? = nil
+    
+    //MARK: - Memory Variables
+    private(set) var prevNumber: Int? = nil
 }
 
 extension CalcControllerViewModel {
@@ -52,31 +56,49 @@ extension CalcControllerViewModel {
             fatalError()
         case .equals:
             fatalError()
-        case .number(let int):
-            fatalError()
+        case .number(let number):
+            self.didSelectNumber(with: number)
         case .decimal:
             fatalError()
         }
+        
+        self.updateView?()
     }
 }
 
 
 extension CalcControllerViewModel {
     
-    private func didSelectButton(with number: Int) {
+    private func didSelectNumber(with number: Int) {
         
         if self.currentNumber == .firstNumber {
             
             if let firstNumber = self.firstNumber {
-                var firstNimberString = firstNumber.description
-                firstNimberString.append(number.description)
-                self.firstNumber = Int(firstNimberString)
+                var firstNumberString = firstNumber.description
+                firstNumberString.append(number.description)
+                self.firstNumber = Int(firstNumberString)
+                self.prevNumber = Int(firstNumberString)
+                
+            } else {
+                self.firstNumber = Int(number)
+                self.prevNumber = Int(number)
             }
             
         } else {
-            self.firstNumber = Int(number)
+
+            if let secondNumber = self.secondNumber {
+                
+                var secondNumberString = secondNumber.description
+                secondNumberString.append(number.description)
+                self.secondNumber = Int(secondNumberString)
+                self.prevNumber = Int(secondNumberString )
+                
+            } else {
+                self.secondNumber = Int(number)
+                self.prevNumber = Int(number)
+            }
+
         }
-        
     }
 }
  

@@ -44,6 +44,13 @@ class CalcController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
+        self.viewModel.updateView = { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.collectionView.reloadData()
+            }
+            
+        }
+        
     }
     
     // MARK: - UI Setup (Настройка пользовательского интерфейса)

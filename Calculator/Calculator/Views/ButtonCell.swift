@@ -49,7 +49,7 @@ class ButtonCell: UICollectionViewCell {
         
         switch self.calculatorButton {
         case let .number(int) where int == 0:
-            self.layer.cornerRadius = 36
+            self.layer.cornerRadius = self.frame.size.height / 2
             
             let extraSpace = self.frame.width-self.frame.height
             
@@ -61,7 +61,7 @@ class ButtonCell: UICollectionViewCell {
                 self.titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -extraSpace)
             ])
         default:
-            self.layer.cornerRadius = self.frame.size.width/2
+            self.layer.cornerRadius = self.frame.size.width / 2
             
             NSLayoutConstraint.activate([
                 self.titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),

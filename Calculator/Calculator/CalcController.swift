@@ -12,7 +12,7 @@ class CalcController: UIViewController {
     
     let viewModel: CalcControllerViewModel
     
-    // MARK: - UI Components (Компоненты пользовательского интерфейса)
+// MARK: - UI Components (Компоненты пользовательского интерфейса)
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -26,7 +26,7 @@ class CalcController: UIViewController {
     }()
 
     
-    // MARK: - Lifecycle (Жизненный цикл)
+// MARK: - Lifecycle (Жизненный цикл)
     init(viewModel: CalcControllerViewModel = CalcControllerViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -44,22 +44,20 @@ class CalcController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
-        self.viewModel.updateView = { [weak self] in
+        self.viewModel.updateView = {
             DispatchQueue.main.async { [weak self] in
                 self?.collectionView.reloadData()
             }
-            
         }
-        
     }
     
-    // MARK: - UI Setup (Настройка пользовательского интерфейса)
+// MARK: - UI Setup (Настройка пользовательского интерфейса)
     private func setupUI() {
         view.addSubview(self.collectionView)
         
         collectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.top.bottom.equalToSuperview()
+            $0.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
 
@@ -83,22 +81,18 @@ extension CalcController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        let totalellHeight = view.frame.size.width
+        let totalellHeight = view.frame.size.height - view.safeAreaInsets.bottom - view.safeAreaInsets.top
         let totalVerticalCellSpacing = CGFloat(10*4)
+        let buttonsHeight = (view.frame.size.width - 40) / 4 * 5
         
-        let window = view.window?.windowScene?.keyWindow
-        let topPadding = window?.safeAreaInsets.top ?? 0
-        let bottonPadding = window?.safeAreaInsets.bottom ?? 0
-        
-        let avalibleScreenHeight = view.frame.size.height - topPadding - bottonPadding
-        let headerHeight = (avalibleScreenHeight - totalellHeight) - totalVerticalCellSpacing
+        let headerHeight = totalellHeight - totalVerticalCellSpacing - buttonsHeight
         
         return CGSize(width: view.frame.size.width, height: headerHeight)
     }
 
     
     
-    // MARK: - Normal Cells (Buttons)
+// MARK: - Normal Cells (Buttons)
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.viewModel.calcButtonCells.count
     }
@@ -128,19 +122,19 @@ extension CalcController: UICollectionViewDelegateFlowLayout {
         switch calcButton {
         case let .number(int) where int == 0:
             return CGSize(
-                width: (view.frame.self.width/5)*2 + ((view.frame.self.width/5)/3),
-                height: view.frame.size.width/5
+                width: ((view.frame.size.width - 40) / 2) + 10,
+                height: (view.frame.size.width - 40) / 4
             )
         default:
             return CGSize(
-                width: view.frame.size.width/5,
-                height: view.frame.size.width/5
+                width: (view.frame.size.width - 40) / 4,
+                height: (view.frame.size.width - 40) / 4
             )
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return (self.view.frame.width/5)/3
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

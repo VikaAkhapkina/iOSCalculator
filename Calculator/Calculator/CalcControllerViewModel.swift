@@ -39,31 +39,22 @@ class CalcControllerViewModel {
     private(set) var prevOperation: CalculatorOperation? = nil
 }
 
+// MARK: - Selection Numbers
 extension CalcControllerViewModel {
     
     public func didSelectButton(with calcButton: CalculatorButton){
         
         switch calcButton {
-        case .allClear:
-            self.didSelectAllClear()
-        case .plusMines:
-            fatalError()
-        case .percentage:
-            fatalError()
-        case .divide:
-            fatalError()
-        case .multiply:
-            fatalError()
-        case .subtract:
-            fatalError()
-        case .add:
-            fatalError()
-        case .equals:
-            fatalError()
-        case .number(let number):
-            self.didSelectNumber(with: number)
-        case .decimal:
-            fatalError()
+        case .allClear: self.didSelectAllClear()
+        case .plusMines: fatalError()
+        case .percentage: fatalError()
+        case .divide: self.didSelectionOperation(with: .divite)
+        case .multiply: self.didSelectionOperation(with: .multiply)
+        case .subtract: self.didSelectionOperation(with: .subtract)
+        case .add: self.didSelectionOperation(with: .add)
+        case .equals: fatalError()
+        case .number(let number): self.didSelectNumber(with: number)
+        case .decimal: fatalError()
         }
         
         self.updateView?()
@@ -78,7 +69,6 @@ extension CalcControllerViewModel {
         self.prevOperation = nil
     }
 }
-
 
 extension CalcControllerViewModel {
     
@@ -114,4 +104,42 @@ extension CalcControllerViewModel {
         }
     }
 }
- 
+
+// MARK: - Equals & Arithmetic Operation
+extension CalcControllerViewModel {
+    
+    private func didSelectionOperation(with operation: CalculatorOperation) {
+        
+        if currentNumber == .firstNumber {
+            self.operation = operation
+            currentNumber = .secondNumber
+        } else if currentNumber == .secondNumber {
+            
+            if let prevOperation = self.operation, let firstNumber = self.firstNumber, let secondNumber = self.secondNumber {
+                let resalt = getOperationResult(operation, firstNumber, secondNumber)
+                self.secondNumber = nil
+                self.firstNumber = resalt
+                self.currentNumber = .secondNumber
+                self.operation = operation
+            } else {
+                self.operation = operation
+        }
+    }
+    }
+       
+    // MARK: - Helper
+    private func getOperationResult(_ operation: CalculatorOperation, _ firstNumber: Int, _ secondNumber: Int) -> Int {
+
+        switch operation {
+        case .divite:
+            return (firstNumber / secondNumber)
+        case .multiply:
+            return (firstNumber * secondNumber)
+        case .subtract:
+            return (firstNumber - secondNumber)
+        case .add:
+            return (firstNumber + secondNumber)
+
+        }
+    }
+}

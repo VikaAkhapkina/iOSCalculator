@@ -49,6 +49,8 @@ class CalcHeadeCell: UICollectionReusableView {
 
             
         ])
+        
+        backgroundColor = .purple
     }
     
 }
